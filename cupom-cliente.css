@@ -1,0 +1,279 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header .back-icon {
+    position: absolute;
+    left: 20px;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+
+header .back-icon .material-icons {
+    font-size: 24px;
+}
+
+.fidelity-card {
+    background-color: #333;
+    color: #fff;
+    width: 85%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 40px; /* Ajuste para afastar do header fixo */
+    margin-bottom: 40px;
+}
+
+.fidelity-card .logo {
+    width: 100px;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.fidelity-card .squares {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.fidelity-card .square,
+.fidelity-card .special {
+    width: 50px;
+    height: 50px;
+    background-color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.fidelity-card .special {
+    background-color: #f8d948;
+    color: #333;
+    font-size: 10px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.fidelity-card .special span {
+    display: block;
+}
+
+
+.number-selection {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.number {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.number.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+#segundo{
+    margin-bottom: 5%;
+}
+
+button#clear-squares,
+button#show-coupon{
+    margin-top: 20px;
+    width: 40%;
+    padding: 15px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button#clear-squares{
+    background-color: #da4e5e;
+    font-weight: 600;
+}
+
+button#show-coupon{
+    background-color: #007bff;
+    font-weight: 600;
+}
+
+button#show-coupon:hover {
+    background-color: #0056b3;
+}
+
+button#clear-squares:hover {
+    background-color: #c03545;
+}
+
+
+
+#notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #6c757d; /* Cinza */
+    color: white;
+    width:70%;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000;
+    display: none;
+}
+
+#notification p {
+    margin: 0;
+    font-size: 25px;
+}
+
+#notification a button.agendar{
+    width: 50%;
+    padding: 10px;
+    margin-top: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+#notification a button.agendar:hover{
+   background-color:#007bff;
+   color: white;
+}
+
+#fireworks-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.firework {
+    position: absolute;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    animation: launch 1s ease-in-out, explode 1s ease-in-out 1s;
+}
+
+@keyframes launch {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: 80%;
+    }
+}
+
+@keyframes explode {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(3);
+    }
+}
+
+
+/* Telas pequenas (até 600px) */
+@media screen and (max-width: 359px) {
+body{
+    height: 140vh;
+}
+
+    .fidelity-card {
+        margin-top: 30%;
+    }
+
+    .number{
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+/* Telas pequenas (até 600px) */
+@media screen and (min-width:360px) and (max-width: 600px) {
+    .fidelity-card {
+        margin-top: 10%;
+    }
+}
+
+/* Telas médias (601px a 1024px) */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+    header h1 {
+        font-size: 30px;
+    }
+
+    .fidelity-card {
+        margin-top: 5%;
+        width: 55%;
+        padding: 20px;
+    }
+}
+
+/* Telas grandes (acima de 1024px) */
+@media screen and (min-width: 1025px) {
+
+    body{
+        height: 110vh;
+    }
+
+    .fidelity-card {
+        margin-top: 5%;
+        width: 55%;
+        padding: 20px;
+    }
+}

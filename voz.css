@@ -1,0 +1,144 @@
+body {
+    background-color: #E5E9ED;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Estilo para o botão de voltar */
+#backButton {
+    color: black;
+    font-size: 20px;
+    position: absolute;
+    top: 20px;
+    left: -15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+.logo {
+    background-color: #2C2C30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 30%;
+    height: 30%;
+    aspect-ratio: 1/1;
+    margin: 0 auto 50px auto; /* Center horizontally */
+}
+
+.logo img {
+    width: 90%;
+    height: auto;
+}
+
+h1 {
+    width: 85%;
+    margin: auto;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.chat-container {
+    background-color: #F0F0F0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    height: 210px; /* Altura fixa para o contêiner do chat */
+    overflow-y: auto; /* Permite rolagem vertical */
+}
+
+/* Tornando a barra de rolagem invisível */
+.chat-container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    display: flex;
+    padding: 10px;
+    border-radius: 10px;
+     opacity: 0; /* Inicialmente invisível */
+    transition: opacity 0.5s ease-in-out; /* Transição de fade-in */
+}
+
+.message.bot {
+    background-color: #007bff;
+    color: white;
+    justify-content: flex-start;
+    align-self: flex-start; /* Align to the left */
+    text-align: left;
+}
+
+.message.user {
+    background-color: #888;
+    color: white;
+    justify-content: flex-end;
+    align-self: flex-end; /* Align to the right */
+    text-align: right;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.voice-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#voice-text {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 200px;
+}
+
+#voice-btn {
+    margin-top: 10px;
+    margin-left: -15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#voice-btn img {
+    width: 40px;
+    display: flex;
+}
+
+#voice-btn:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Adicionando FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="calendário.css">
+    <title>Calendário</title>
+</head>
+<body>
+    <a href="dashboard.html">
+        <button id="backButton">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+    </a>
+
+    <div class="container">
+        <div class="calendar-container">
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button id="prevMonth">&lt;</button>
+                    <h2 id="calendarMonth"></h2>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <div class="calendar-body" id="calendarBody"></div>
+            </div>
+        </div>
+
+        <div class="coluna-container">
+            <div class="coluna coluna-esquerda">
+                <div class="informações">
+                    <div class="red"></div>
+                    <h2>Lotado</h2>
+                </div>
+                <div class="informações">
+                    <div class="orange"></div>
+                    <h2>Quase Lotado</h2>
+                </div>
+            </div>
+            <div class="coluna coluna-direita">
+                <div id="vagas" class="informações">
+                    <div class="blue"></div>
+                    <h2>Vagas Razoáveis</h2>
+                </div>
+                <div class="informações">
+                    <div class="green"></div>
+                    <h2>Muitas Vagas</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container" id="cardContainer"></div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <div id="appointmentDetails"></div>
+        </div>
+    </div>
+
+    <!-- Adicione a biblioteca do Firebase -->
+    <script type="module">
+        // Importações do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdetp7jRbqaL5B2iaFOjSSI_nUH_U0f6U",
+            authDomain: "arthur-37ccf.firebaseapp.com",
+            databaseURL: "https://arthur-37ccf-default-rtdb.firebaseio.com",
+            projectId: "arthur-37ccf",
+            storageBucket: "arthur-37ccf.appspot.com",
+            messagingSenderId: "633486950077",
+            appId: "1:633486950077:web:70b39f855f01c4c721c1d4"
+        };
+
+        // Inicialização do Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        // Função para gerar o calendário
+        const calendarBody = document.getElementById('calendarBody');
+        const calendarMonth = document.getElementById('calendarMonth');
+        const prevMonthButton = document.getElementById('prevMonth');
+        const nextMonthButton = document.getElementById('nextMonth');
+        const cardContainer = document.getElementById('cardContainer');
+
+        const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        async function generateCalendar(month, year) {
+            calendarBody.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            calendarMonth.textContent = new Date(year, month).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+            weekdays.forEach(weekday => {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-weekday');
+                dayElement.textContent = weekday;
+                calendarBody.appendChild(dayElement);
+            });
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                calendarBody.appendChild(emptyCell);
+            }
+
+            const today = new Date();
+            const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+
+            const appointmentsSnapshot = await get(ref(db, 'agendamentos'));
+            const appointmentsData = appointmentsSnapshot.val();
+
+            const daysWithAppointments = {};
+            for (const key in appointmentsData) {
+                const appointmentDate = appointmentsData[key].data;
+                if (daysWithAppointments[appointmentDate]) {
+                    daysWithAppointments[appointmentDate].push(appointmentsData[key]);
+                } else {
+                    daysWithAppointments[appointmentDate] = [appointmentsData[key]];
+                }
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const formattedDate = `${day.toString().padStart(2, '0')}-${(month + 1).toString().padStart(2, '0')}-${year}`;
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day');
+                dayElement.textContent = day;
+
+                if (date.getDay() === 1) {
+                    dayElement.classList.add('calendar-day--disabled');
+                } else if (isCurrentMonth && day === today.getDate()) {
+                    dayElement.classList.add('calendar-day--today');
+                } else if (daysWithAppointments[formattedDate]) {
+                    const appointmentCount = daysWithAppointments[formattedDate].length;
+                    if (appointmentCount >= 1 && appointmentCount <= 5) {
+                        dayElement.classList.add('calendar-day--green');
+                    } else if (appointmentCount >= 6 && appointmentCount <= 7) {
+                        dayElement.classList.add('calendar-day--blue');
+                    } else if (appointmentCount >= 8 && appointmentCount <= 10) {
+                        dayElement.classList.add('calendar-day--orange');
+                    } else if (appointmentCount > 10) {
+                        dayElement.classList.add('calendar-day--red');
+                    }
+                    dayElement.addEventListener('click', () => {
+                        document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('calendar-day--selected'));
+                        dayElement.classList.add('calendar-day--selected');
+                        fetchAppointments(formattedDate);
+                    });
+                } else {
+                    dayElement.addEventListener('click', () => {
+                        document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('calendar-day--selected'));
+                        dayElement.classList.add('calendar-day--selected');
+                        fetchAppointments(formattedDate);
+                    });
+                }
+                
+                calendarBody.appendChild(dayElement);
+            }
+        }
+
+        prevMonthButton.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+
+        nextMonthButton.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+
+        // Função para buscar agendamentos e mostrar no pop-up
+        async function fetchAppointments(selectedDate) {
+            const snapshot = await get(ref(db, 'agendamentos'));
+            const data = snapshot.val();
+
+            if (!data) return;
+
+            const appointments = [];
+            for (const key in data) {
+                if (data[key].data === selectedDate) {
+                    appointments.push({ ...data[key], key });
+                }
+            }
+
+            appointments.sort((a, b) => a.hora.localeCompare(b.hora)); // Ordena por horário
+
+            const appointmentDetails = document.getElementById('appointmentDetails');
+            appointmentDetails.innerHTML = ''; // Limpa os detalhes existentes
+
+            if (appointments.length === 0) {
+                appointmentDetails.innerHTML = '<p>Sem agendamentos para este dia.</p>';
+            } else {
+                appointments.forEach(appointment => {
+                    const details = document.createElement('div');
+                    details.innerHTML = `
+                        <h2>${appointment.nome}</h2>
+                        <p><strong>Hora:</strong> ${appointment.hora}</p>
+                    `;
+                    appointmentDetails.appendChild(details);
+                });
+            }
+
+            // Mostrar o pop-up
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+        }
+
+        // Fechar o pop-up
+        const popup = document.getElementById('popup');
+        const closeBtn = document.querySelector('.close-btn');
+        closeBtn.onclick = function() {
+            popup.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == popup) {
+                popup.style.display = 'none';
+            }
+        }
+
+        generateCalendar(currentMonth, currentYear);
+    </script>
+</body>
+</html>

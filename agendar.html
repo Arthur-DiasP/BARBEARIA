@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento</title>
+  <link rel="stylesheet" href="agendar.css">
+  <!-- Adicionando FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Adicionando o CSS do Flatpickr -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdetp7jRbqaL5B2iaFOjSSI_nUH_U0f6U",
+      authDomain: "arthur-37ccf.firebaseapp.com",
+      databaseURL: "https://arthur-37ccf-default-rtdb.firebaseio.com",
+      projectId: "arthur-37ccf",
+      storageBucket: "arthur-37ccf.appspot.com",
+      messagingSenderId: "633486950077",
+      appId: "1:633486950077:web:70b39f855f01c4c721c1d4"
+    };
+  
+    // Inicialização do Firebase
+    const app = initializeApp(firebaseConfig);
+  
+    // Função para escrever dados do usuário no Firebase
+    function writeUserData(nome, telefone, servicos, data, hora) {
+      const db = getDatabase();
+      set(ref(db, 'agendamentos/' + nome), {
+        nome: nome,
+        telefone: telefone,
+        servicos: servicos,
+        data: data,
+        hora: hora
+      });
+    }
+  
+    // Função para ler os horários disponíveis do Firebase para o dia selecionado
+    async function getAvailableHours(dataSelecionada) {
+      const db = getDatabase();
+      const snapshot = await get(child(ref(db), 'agendamentos'));
+      const agendamentos = snapshot.val();
+      const horariosAgendados = Object.values(agendamentos || {})
+        .filter(agendamento => agendamento.data === dataSelecionada)
+        .map(agendamento => agendamento.hora);
+      const todosHorarios = [
+        '08:00', '09:00', '10:00', '11:00', '12:00', '13:00',
+        '14:00', '15:00', '16:00', '17:00', '18:00'
+      ];
+
+      // Filtrar os horários disponíveis removendo os horários que já passaram
+      const horariosDisponiveis = todosHorarios.filter(horario => !horariosAgendados.includes(horario));
+      return horariosDisponiveis;
+    }
+      
+  
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('userForm');
+      const horaSelect = document.getElementById('hora');
+      const dataInput = document.getElementById('data');
+      const telefoneInput = document.getElementById('telefone');
+  
+      dataInput.addEventListener('change', async function () {
+        const dataSelecionada = dataInput.value;
+        const horariosDisponiveis = await getAvailableHours(dataSelecionada);
+        horaSelect.innerHTML = '<option value="">HORA</option>';
+        horariosDisponiveis.forEach(horario => {
+          horaSelect.innerHTML += `<option value="${horario}">${horario}</option>`;
+        });
+      });
+
+      // Formatar o campo de telefone
+      telefoneInput.addEventListener('input', function() {
+        const telefone = telefoneInput.value.replace(/\D/g, ''); // Remove todos os caracteres que não são dígitos
+        const telefoneFormatado = formatarTelefone(telefone);
+        telefoneInput.value = telefoneFormatado;
+      });
+
+      // Função para formatar o número de telefone
+      function formatarTelefone(telefone) {
+        let telefoneFormatado = telefone.replace(/(\d{2})(\d)/, '($1) $2'); // Adiciona parênteses nos primeiros dois dígitos
+        telefoneFormatado = telefoneFormatado.replace(/(\d{5})(\d{1,4})/, '$1-$2'); // Adiciona o traço após os cinco primeiros dígitos
+        return telefoneFormatado;
+      }
+  
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+  
+        const nome = form.elements['nome'].value;
+        const telefone = form.elements['telefone'].value;
+        const servicosSelecionados = [];
+        const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach(function(checkbox) {
+          const servicoNome = checkbox.name;
+          const servicoPreco = checkbox.value;
+          servicosSelecionados.push({ nome: servicoNome, preco: servicoPreco });
+        });
+        const data = form.elements['data'].value;
+        const hora = form.elements['hora'].value;
+  
+        writeUserData(nome, telefone, servicosSelecionados, data, hora);
+        alert('Agendamento realizado com sucesso!');
+        form.reset(); // Limpa o formulário após o envio
+  
+        // Redireciona para outra página após a notificação
+        setTimeout(function(){
+          const urlParams = new URLSearchParams();
+          urlParams.set('nome', nome);
+          urlParams.set('telefone', telefone);
+          urlParams.set('data', data);
+          urlParams.set('hora', hora);
+          urlParams.set('servicos', JSON.stringify(servicosSelecionados));
+          const queryString = urlParams.toString();
+          window.location.href = "sucesso.html?" + queryString;
+        }, 1000); // Redireciona após 1 segundo (1000 milissegundos)
+      });
+      
+      // Adiciona a função ao botão
+      const submitButton = document.getElementById('submitButton');
+      submitButton.addEventListener('click', function () {
+        form.dispatchEvent(new Event('submit'));
+      });
+    });
+
+    // Função para resetar o formulário
+    function resetForm() {
+      document.getElementById("userForm").reset();
+      document.getElementById("hora").value = "";
+      var checkboxes = document.querySelectorAll('#ServiçosConteiner input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+  
+    // Adicionando um ouvinte de evento ao botão de redefinir
+    document.getElementById("resetButton").addEventListener("click", resetForm);
+
+    // Função para mostrar ou ocultar o contêiner quando o botão é clicado
+    document.getElementById('buttonServiços').addEventListener('click', function() {
+      var cont = document.getElementById('ServiçosConteiner');
+      if (cont.style.display === 'none') {
+        cont.style.display = 'block';
+      } else {
+        cont.style.display = 'none';
+      }
+    });
+  
+    // Adicionando evento de clique aos checkboxes
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        updateButton();
+      });
+    });
+  
+    // Adicionando evento de clique ao botão "Confirmar"
+    document.getElementById('confirmarBotao').addEventListener('click', function() {
+      var cont = document.getElementById('ServiçosConteiner');
+      cont.style.display = 'none';
+    });
+  
+    // Função para atualizar o texto do botão com os serviços selecionados e o valor total
+    function updateButton() {
+      var selectedServices = [];
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          selectedServices.push(checkbox.getAttribute('name'));
+        }
+      });
+  
+      var buttonText;
+      if (selectedServices.length === 0) {
+        buttonText = 'SERVIÇOS';
+      } else if (selectedServices.length === 1) {
+        buttonText = selectedServices[0];
+      } else if (selectedServices.length === 2) {
+        buttonText = selectedServices.join(' e ');
+      } else {
+        buttonText = selectedServices.length + ' serviços selecionados';
+      }
+  
+      var total = calculateTotal();
+      document.getElementById('buttonServiços').innerText = buttonText;
+      document.getElementById('total').innerText = total.toFixed(2);
+    }
+  
+    // Função para calcular o valor total dos serviços selecionados
+    function calculateTotal() {
+      var total = 0;
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          total += parseFloat(checkbox.value);
+        }
+      });
+      return total;
+    }
+  </script>
+
+<a href="selecionar.html"><button id="backButton">
+  <i class="fas fa-arrow-left"></i> Voltar
+</button></a>
+  
+  <form id="userForm">
+    <div class="form-group">
+      <img src="https://cdn-icons-png.flaticon.com/128/1802/1802292.png" alt="Nome">
+      <input type="text" id="nome" name="nome" placeholder="NOME OU APELIDO" required>
+    </div>
+
+    <div class="form-group">
+      <img src="https://cdn-icons-png.flaticon.com/128/1384/1384023.png" alt="Telefone">
+      <input type="tel" id="telefone" name="telefone" placeholder="TELEFONE" required>
+    </div>
+
+    <div class="form-group">
+      <img src="https://cdn-icons-png.flaticon.com/128/5672/5672465.png" alt="Serviços">
+      <!-- Botão -->
+      <button id="buttonServiços">SERVIÇOS</button>
+
+      <!-- Contêiner -->
+      <div id="ServiçosConteiner">
+        <label>
+          <input class="Itens-Serviços" type="checkbox" name="Corte" value="30"> Corte - R$ 30,00
+        </label><br>
+        <label>
+          <input class="Itens-Serviços" type="checkbox" name="Barba" value="20"> Barba - R$ 20,00
+        </label><br>
+        <label>
+          <input class="Itens-Serviços" type="checkbox" name="Sobrancelha" value="10"> Sobrancelha - R$ 10,00
+        </label><br>
+        <label>
+          <input class="Itens-Serviços" type="checkbox" name="Penteado" value="25"> Penteado - R$ 25,00
+        </label><br>
+        <div id="valorTotal">
+          Valor: R$ <span id="total">0.00</span>
+        </div>
+        <button id="confirmarBotao">Confirmar</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <img src="https://cdn-icons-png.flaticon.com/128/8299/8299807.png" alt="Data">
+      <input type="text" id="data" name="data" placeholder="DATA" required>
+    </div>
+
+    <div class="form-group">
+      <img src="https://cdn-icons-png.flaticon.com/128/55/55256.png" alt="Hora">
+      <select class="hora" id="hora" name="hora" required oninvalid="this.setCustomValidity('Por favor, selecione uma hora.')">
+        <option style="text-align: center;" value="">HORA</option>
+        <option value="08:00">08:00</option>
+        <option value="09:00">09:00</option>
+        <option value="10:00">10:00</option>
+        <option value="11:00">11:00</option>
+        <option value="12:00">12:00</option>
+        <option value="13:00">13:00</option>
+        <option value="14:00">14:00</option>
+        <option value="15:00">15:00</option>
+        <option value="16:00">16:00</option>
+        <option value="17:00">17:00</option>
+        <option value="18:00">18:00</option>
+      </select>
+    </div>
+
+    <button id="submitButton" type="button">Agendar</button>
+    <button id="resetButton">Redefinir</button>
+  </form>
+
+  <script>
+    function resetForm() {
+      // Resetar o formulário
+      document.getElementById("userForm").reset();
+      // Resetar a seleção de hora para o valor padrão
+      document.getElementById("hora").value = "";
+      // Desmarcar todos os checkboxes dentro do contêiner de serviços
+      var checkboxes = document.querySelectorAll('#ServiçosConteiner input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+  
+    // Adicionando um ouvinte de evento ao botão de redefinir
+    document.getElementById("resetButton").addEventListener("click", resetForm);
+  </script>
+
+  <script>
+    // Função para mostrar ou ocultar o contêiner quando o botão é clicado
+    document.getElementById('buttonServiços').addEventListener('click', function() {
+      var cont = document.getElementById('ServiçosConteiner');
+      if (cont.style.display === 'none') {
+        cont.style.display = 'block';
+      } else {
+        cont.style.display = 'none';
+      }
+    });
+  
+    // Adicionando evento de clique aos checkboxes
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        updateButton();
+      });
+    });
+  
+    // Adicionando evento de clique ao botão "Confirmar"
+    document.getElementById('confirmarBotao').addEventListener('click', function() {
+      var cont = document.getElementById('ServiçosConteiner');
+      cont.style.display = 'none';
+    });
+  
+    // Função para atualizar o texto do botão com os serviços selecionados e o valor total
+    function updateButton() {
+      var selectedServices = [];
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          selectedServices.push(checkbox.getAttribute('name'));
+        }
+      });
+  
+      var buttonText;
+      if (selectedServices.length === 0) {
+        buttonText = 'SERVIÇOS';
+      } else if (selectedServices.length === 1) {
+        buttonText = selectedServices[0];
+      } else if (selectedServices.length === 2) {
+        buttonText = selectedServices.join(' e ');
+      } else {
+        buttonText = selectedServices.length + ' serviços selecionados';
+      }
+  
+      var total = calculateTotal();
+      document.getElementById('buttonServiços').innerText = buttonText;
+      document.getElementById('total').innerText = total.toFixed(2);
+    }
+  
+    // Função para calcular o valor total dos serviços selecionados
+    function calculateTotal() {
+      var total = 0;
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          total += parseFloat(checkbox.value);
+        }
+      });
+      return total;
+    }
+  </script>
+
+  <!-- Adicionando o script do Flatpickr -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script> <!-- Adicionando o arquivo de localização para português -->
+  <script>
+    // Inicializando o Flatpickr para o campo de data
+    flatpickr('#data', {
+      enableTime: false,
+      dateFormat: 'd-m-Y',
+      minDate: 'today', // Não permitir datas anteriores a hoje
+      locale: 'pt', // Definindo o idioma para português
+      disable: [
+        function(date) {
+          // Bloqueando as segundas-feiras
+          return (date.getDay() === 1); // Retorna verdadeiro para bloquear
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

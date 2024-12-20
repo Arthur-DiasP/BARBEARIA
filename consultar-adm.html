@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultar</title>
+
+  <!-- Adicionando FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+    }
+
+    #searchForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #searchForm input {
+      width: 150%;
+      padding: 15px;
+      margin-bottom: 19px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      background-color: #ffffff;
+      font-size: 17px;
+      text-align: center;
+      color: black;
+      position: relative; /* Adicionado para posicionar a imagem */
+    }
+
+    #searchForm button {
+      background-color: #007bff;
+      font-size: 19px;
+      color: white;
+      width: 150%;
+      padding: 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #result {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #userDataContainer {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #ffffff;
+    }
+
+    #userDataContainer h2 {
+      text-align: center;
+    }
+
+    #userDataContainer p {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .nameCell {
+      font-weight: bold;
+    }
+
+    #generatePdfButton {
+      display: none;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    /* Estilo para o botão de voltar */
+    #backButton {
+      font-size: 18px;
+      position: absolute;
+      top: 20px;
+      left: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+
+    @media screen and (min-width:1301px) and (max-width: 1600px){
+      h1{
+      font-size: 40px;
+      margin-top: 100px;
+    }
+
+    #searchForm input{
+      width: 210%;
+      font-size: 20px;
+      padding: 15px;
+    }
+
+    #searchForm button{
+      width: 210%;
+      font-size: 20px;
+      padding: 15px;
+    }
+
+    #userDataContainer {
+      width: 620px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #backButton{
+      font-size: 25px;
+    }
+
+    #userDataContainer p {
+      font-size: 25px;
+    }
+    }
+
+
+
+    @media screen and (min-width:1000px) and (max-width: 1300px){
+
+      h1{
+      font-size: 45px;
+      margin-top: 100px;
+    }
+
+    #searchForm input{
+      width: 210%;
+      font-size: 25px;
+      padding: 15px;
+    }
+
+    #searchForm button{
+      width: 210%;
+      font-size: 25px;
+      padding: 15px;
+    }
+
+    #userDataContainer {
+      width: 550px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #backButton{
+      font-size: 25px;
+    }
+
+    #userDataContainer p {
+      font-size: 30px;
+    }
+
+    }
+
+
+
+
+    @media screen and (min-width:860px) and (max-width: 980px){
+      h1{
+      font-size: 35px;
+      margin-top: 100px;
+    }
+
+    #searchForm input{
+      width: 190%;
+      padding: 15px;
+    }
+
+    #searchForm button{
+      width: 190%;
+      padding: 15px;
+    }
+
+    #userDataContainer {
+      width: 450px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #backButton{
+      font-size: 20px;
+    }
+
+    #userDataContainer p {
+      font-size: 23px;
+    }
+    }
+
+
+
+    @media screen and (min-width:760px) and (max-width: 850px){
+      h1{
+      font-size: 30px;
+      margin-top: 90px;
+    }
+
+    #searchForm input{
+      width: 180%;
+      padding: 15px;
+    }
+
+    #searchForm button{
+      width: 180%;
+      padding: 15px;
+    }
+
+    #userDataContainer {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #backButton{
+      font-size: 20px;
+    }
+
+    #userDataContainer p {
+      font-size: 20px;
+    }
+    }
+
+
+
+
+  @media screen and (min-width: 390px) and (max-width: 430px){
+
+    h1{
+      font-size: 26px;
+      margin-top: 90px;
+    }
+
+    #searchForm input{
+      width: 140%;
+      padding: 15px;
+    }
+
+    #searchForm button{
+      width: 140%;
+      padding: 15px;
+    }
+
+    #userDataContainer {
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+  }
+
+
+  @media screen and (min-width: 340px) and (max-width: 389px){
+
+h1{
+  font-size: 24px;
+  margin-top: 90px;
+}
+
+#searchForm input{
+  width: 130%;
+  padding: 15px;
+}
+
+#searchForm button{
+  width: 130%;
+  padding: 15px;
+}
+
+#userDataContainer {
+  width: 250px;
+  margin: 0 auto;
+  padding: 20px;
+}
+}
+
+
+@media screen and (max-width: 339px){
+
+h1{
+  font-size: 22px;
+  margin-top: 90px;
+}
+
+#searchForm input{
+  width: 120%;
+  padding: 15px;
+}
+
+#searchForm button{
+  width: 120%;
+  padding: 15px;
+}
+
+#userDataContainer {
+  width: 240px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+}
+
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdetp7jRbqaL5B2iaFOjSSI_nUH_U0f6U",
+      authDomain: "arthur-37ccf.firebaseapp.com",
+      databaseURL: "https://arthur-37ccf-default-rtdb.firebaseio.com",
+      projectId: "arthur-37ccf",
+      storageBucket: "arthur-37ccf.appspot.com",
+      messagingSenderId: "633486950077",
+      appId: "1:633486950077:web:70b39f855f01c4c721c1d4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Function to read user data from Firebase
+    async function getUserData(nome) {
+      const db = getDatabase();
+      const snapshot = await get(child(ref(db), `agendamentos/${nome}`));
+      const userData = snapshot.val();
+      return userData;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('searchForm');
+      const resultDiv = document.getElementById('result');
+      const userDataBody = document.getElementById('userDataBody');
+      const generatePdfButton = document.getElementById('generatePdfButton');
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const nome = form.elements['nome'].value;
+        const userData = await getUserData(nome);
+
+        if (userData) {
+          // Calculate total service price
+          const totalPrice = userData.servicos.reduce((acc, servico) => acc + parseFloat(servico.preco), 0);
+
+          const userDataContainer = document.createElement('div');
+          userDataContainer.id = 'userDataContainer';
+
+          userDataContainer.innerHTML = `
+            <h2>Dados do Cliente</h2>
+            <p><strong>Nome:</strong> ${userData.nome}</p>
+            <p><strong>Telefone:</strong> ${userData.telefone}</p>
+            <p><strong>Serviços:</strong> ${userData.servicos.map(servico => `${servico.nome} - R$ ${servico.preco}`).join('<br>')}</p>
+            <p><strong>Preço Total:</strong> R$ ${totalPrice.toFixed(2)}</p>
+            <p><strong>Data:</strong> ${userData.data}</p>
+            <p><strong>Hora:</strong> ${userData.hora}</p>
+          `;
+
+          resultDiv.innerHTML = '';
+          resultDiv.appendChild(userDataContainer);
+
+          // Show the "Gerar PDF" button
+          generatePdfButton.style.display = 'block';
+
+          // Generate PDF using html2pdf.js when button is clicked
+          generatePdfButton.addEventListener('click', function() {
+            const options = {
+              margin: 10,
+              filename: `${userData.nome}.pdf`,
+              image: { // Adjust image options if needed
+                type: 'jpeg',
+                quality: 0.95
+              },
+              html2canvas: { // Optional html2canvas options
+                scale: 2 // Increase scale for better quality
+              }
+            };
+
+            html2pdf().from(userDataContainer).set(options).save();
+          });
+        } else {
+          resultDiv.innerHTML = `<p>Nenhum usuário encontrado com o nome ${nome}</p>`;
+          // Hide the "Gerar PDF" button if no user found
+          generatePdfButton.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Consultar Agendamentos</h1>
+  <!-- Adicionando o botão de voltar -->
+  <a href="dashboard.html"><button id="backButton">
+    <i class="fas fa-arrow-left"></i> Voltar
+  </button></a>
+
+  <form id="searchForm">
+    <input placeholder="Nome do Cliente" type="text" id="nome" name="nome" required>
+    <button type="submit">Consultar</button>
+  </form>
+
+  <div id="result"></div>
+
+  <button id="generatePdfButton">Gerar PDF</button>
+
+</body>
+</html>

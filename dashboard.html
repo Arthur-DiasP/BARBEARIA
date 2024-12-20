@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+     <!-- Adicione o link para a biblioteca do Calendário -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="left-column">
+        <div class="icons">
+            <div class="menu-icon" id="menu-icon">
+                <span class="material-icons">menu</span>
+            </div>
+            <div class="dark-icon" id="dark-icon">
+                <span class="material-icons">dark_mode</span>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <ul>
+                <li><img src="LOGO FUTURISTA VPLAY - transparente.png" alt=""></li>
+                <a href="compromisso.html"><li><i class="material-icons">event</i> Agendar Compromisso</li></a>
+                <a href="calendário.html"><li><i class="material-icons">date_range</i> Calendário</li></a>
+                <a href="consultar-adm.html"><li><i class="material-icons">search</i> Consultar</li></a>
+                <a href="cupom-adm.html"><li><i class="material-icons">card_giftcard</i> Cupom</li></a>
+                <!--<a href="cursos.html"><li><i class="material-icons">book</i> Cursos</li></a>-->
+                <a href="https://investore-vplay.netlify.app/"><li><i class="material-icons">trending_up</i> Investimentos</li></a>
+                <a href="tabela.html"><li><i class="material-icons">view_list</i> Tabela</li></a>
+                <a href="index.html"><li class="saída"><i class="material-icons">logout</i> Sair</li></a>
+            </ul>
+        </div>        
+        <div class="content">
+            <h2>Bem-Vindo</h2>
+            <h1>Arthur</h1>
+        </div>
+        <div class="card-organizar" id="card-left-oganizar">
+            <div class="card-hs">
+                <div class="card-hoje">
+                    <h2 id="titulo-hoje">Hoje</h2>
+                    <h3 class="clientes-hoje"></h3>
+                    <img src="https://cdn-icons-png.flaticon.com/128/1802/1802292.png" alt="">
+                    <h3 class="valor-total-hoje"></h3>
+                </div>
+                <div class="card-amanhã">
+                    <h2>Amanhã</h2>
+                    <h3 class="clientes-amanhã"></h3>
+                    <img src="https://cdn-icons-png.flaticon.com/128/5672/5672465.png" alt="">
+                    <h3 class="valor-total-amanhã"></h3>
+                </div>
+            </div>
+            <div class="quadro" id="semana">
+                <h2>Essa Semana</h2>
+                <div class="card-content" id="barChartCard">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        
+            <div class="quadro" id="meses">
+                <h2>Meses</h2>
+                <div class="card-content" id="barChartMesCard">    
+                    <canvas id="barChartMes"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="right-column">
+        <div class="card-organizar">
+            <!-- Botão de filtrar por data -->
+            <button id="filterByDateButton" class="button">Ver Agendamentos por Data</button>
+            <div class="agendamentos">
+                <h3>Agendamentos</h3>
+                <div class="cards-agendamentos">
+                    <div id="cardContainer" class="card-container">
+                        <!-- Cards de agendamento serão inseridos aqui -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+     <!-- Adicione a biblioteca do Calendário -->
+     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+
+     <script type="module" src="gráficos.js"></script>
+
+     <script type="module">
+        // Importações do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdetp7jRbqaL5B2iaFOjSSI_nUH_U0f6U",
+            authDomain: "arthur-37ccf.firebaseapp.com",
+            databaseURL: "https://arthur-37ccf-default-rtdb.firebaseio.com",
+            projectId: "arthur-37ccf",
+            storageBucket: "arthur-37ccf.appspot.com",
+            messagingSenderId: "633486950077",
+            appId: "1:633486950077:web:70b39f855f01c4c721c1d4"
+        };
+    
+        // Inicialização do Firebase
+        const app = initializeApp(firebaseConfig);
+    
+        let userDataArray = []; // Array para armazenar os dados dos usuários
+    
+        // Função para calcular a quantidade de clientes do dia atual
+        function calculateClientsToday(userDataArray) {
+            const today = new Date();
+            const formattedToday = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+            const clientsToday = userDataArray.filter(userData => userData.data === formattedToday).length;
+            return clientsToday;
+        }
+    
+        // Função para calcular a quantidade de clientes do dia seguinte
+        function calculateClientsTomorrow(userDataArray) {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const formattedTomorrow = `${tomorrow.getDate().toString().padStart(2, '0')}-${(tomorrow.getMonth() + 1).toString().padStart(2, '0')}-${tomorrow.getFullYear()}`;
+            const clientsTomorrow = userDataArray.filter(userData => userData.data === formattedTomorrow).length;
+            return clientsTomorrow;
+        }
+    
+        // Função para calcular o valor total dos serviços para os clientes do dia especificado
+        function calculateTotalPrice(userDataArray, targetDate) {
+            // Filtra os clientes com base na data especificada
+            const filteredClients = userDataArray.filter(userData => userData.data === targetDate);
+    
+            // Calcula o valor total dos serviços para os clientes filtrados
+            const totalPrice = filteredClients.reduce((total, userData) => {
+                return total + userData.servicos.reduce((acc, servico) => acc + parseFloat(servico.preco), 0);
+            }, 0);
+    
+            return totalPrice.toFixed(2); // Retorna o valor total formatado com duas casas decimais
+        }
+    
+        // Função para ler os dados do Firebase e atualizar as informações nos cartões
+        async function readUserData() {
+            const db = getDatabase();
+            const snapshot = await get(ref(db, 'agendamentos'));
+            const data = snapshot.val();
+    
+            // Transforma os dados em um array de objetos
+            userDataArray = [];
+            for (const key in data) {
+                if (Object.hasOwnProperty.call(data, key)) {
+                    userDataArray.push({ ...data[key], key: key }); // adiciona a chave (key) do Firebase ao objeto
+                }
+            }
+    
+            // Calcula a quantidade de clientes do dia atual
+            const clientsToday = calculateClientsToday(userDataArray);
+            // Calcula a quantidade de clientes do dia seguinte
+            const clientsTomorrow = calculateClientsTomorrow(userDataArray);
+    
+            // Exibe a quantidade de clientes nos cartões "Hoje" e "Amanhã"
+            document.querySelector('.clientes-hoje').textContent = `Clientes: ${clientsToday}`;
+            document.querySelector('.clientes-amanhã').textContent = `Clientes: ${clientsTomorrow}`;
+    
+            // Calcula o valor total dos serviços para hoje e amanhã
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const formattedToday = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+            const formattedTomorrow = `${tomorrow.getDate().toString().padStart(2, '0')}-${(tomorrow.getMonth() + 1).toString().padStart(2, '0')}-${tomorrow.getFullYear()}`;
+    
+            const totalPriceToday = calculateTotalPrice(userDataArray, formattedToday);
+            const totalPriceTomorrow = calculateTotalPrice(userDataArray, formattedTomorrow);
+    
+            // Exibe o valor total dos serviços nos cartões "Hoje" e "Amanhã"
+            document.querySelector('.valor-total-hoje').textContent = `R$ ${totalPriceToday}`;
+            document.querySelector('.valor-total-amanhã').textContent = `R$ ${totalPriceTomorrow}`;
+    
+            // Chama a função para filtrar os agendamentos de hoje ao carregar os dados
+            filterByDate(formattedToday);
+        }
+    
+        // Função para excluir o agendamento do Firebase
+        function deleteAppointment(key) {
+            const db = getDatabase();
+            const appointmentRef = ref(db, `agendamentos/${key}`);
+    
+            // Remove o agendamento do Firebase
+            remove(appointmentRef)
+                .then(() => {
+                    console.log("Agendamento excluído com sucesso!");
+                    readUserData(); // Atualiza a tabela após a exclusão
+                })
+                .catch((error) => {
+                    console.error("Erro ao excluir o agendamento: ", error);
+                });
+        }
+    
+        // Função para filtrar os resultados com base na data selecionada
+function filterByDate(selectedDate) {
+    const cardContainer = document.getElementById('cardContainer');
+
+    // Limpa os cartões antes de adicionar os novos dados
+    cardContainer.innerHTML = '';
+
+    // Filtra os agendamentos pela data selecionada
+    const filteredAppointments = userDataArray.filter(userData => userData.data === selectedDate);
+
+    if (filteredAppointments.length > 0) {
+        // Atualiza o título do card "Hoje" para mostrar a data selecionada
+        const today = new Date();
+        const [day, month, year] = selectedDate.split('-');
+        const formattedSelectedDate = `${day}/${month}`;
+
+        if (selectedDate === `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`) {
+            document.getElementById('titulo-hoje').textContent = 'HOJE';
+        } else {
+            document.getElementById('titulo-hoje').textContent = formattedSelectedDate;
+        }
+
+        // Calcula a quantidade de clientes e o valor total dos serviços para o dia selecionado
+        const clientsCount = filteredAppointments.length;
+        const totalPrice = filteredAppointments.reduce((total, userData) => {
+            return total + userData.servicos.reduce((acc, servico) => acc + parseFloat(servico.preco), 0);
+        }, 0).toFixed(2);
+
+        // Atualiza os elementos HTML com as informações calculadas
+        document.querySelector('.clientes-hoje').textContent = `Clientes: ${clientsCount}`;
+        document.querySelector('.valor-total-hoje').textContent = `R$ ${totalPrice}`;
+
+        // Exibe os agendamentos filtrados
+        filteredAppointments.forEach(userData => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            const totalPrice = userData.servicos.reduce((acc, servico) => acc + parseFloat(servico.preco), 0);
+            card.innerHTML = `
+                <h2>${userData.nome}</h2>
+                <p class="Serviços"><strong>Serviços:</strong> ${userData.servicos.map(servico => `${servico.nome} - R$ ${servico.preco}`).join('<br>')}</p>
+                <p class="Preço Total"><strong></strong> R$ ${totalPrice.toFixed(2)}</p>
+                <p class="Data" style="display:none"><strong>Data:</strong> ${userData.data}</p>
+                <p class="Hora"><strong>Hora:</strong> ${userData.hora}</p>
+            `;
+            cardContainer.appendChild(card);
+
+            // Adiciona o evento de clique duplo para excluir o agendamento
+            card.querySelector('h2').addEventListener('dblclick', function() {
+                const confirmDelete = confirm(`Tem certeza que deseja excluir o agendamento de ${userData.nome}?`);
+                if (confirmDelete) {
+                    deleteAppointment(userData.key); // Chama a função para excluir o agendamento
+                }
+            });
+        });
+    } else {
+        // Mostra a mensagem de que não há agendamentos para o dia selecionado
+        const noAppointmentsMessage = document.createElement('p');
+        noAppointmentsMessage.className = 'mensagem-agendamento'; // Adiciona a classe 'mensagem-agendamento'
+        noAppointmentsMessage.textContent = `Não há agendamentos para ${selectedDate}`;
+
+        // Cria o elemento de imagem e define seu atributo src
+        const noAppointmentsImage = document.createElement('img');
+        noAppointmentsImage.className = 'negativo-agendamento'; // Adiciona a classe 'negativo-agendamento'
+        noAppointmentsImage.src = 'https://cdn-icons-png.flaticon.com/128/2550/2550258.png';
+        noAppointmentsImage.alt = 'Sem agendamentos'; // Alt text para acessibilidade
+
+        // Adiciona a imagem ao parágrafo
+        noAppointmentsMessage.appendChild(noAppointmentsImage);
+
+        cardContainer.appendChild(noAppointmentsMessage);
+    }
+}
+
+    
+        // Chama a função para ler os dados quando o documento é carregado
+        document.addEventListener('DOMContentLoaded', function () {
+            readUserData();
+        });
+    
+        // Função para filtrar os resultados com base na data selecionada pelo usuário
+const filterByDateButton = document.getElementById('filterByDateButton');
+let picker;
+
+filterByDateButton.addEventListener('click', function() {
+    if (picker) {
+        picker.destroy();
+        picker = null;
+    } else {
+        picker = new Pikaday({
+            field: filterByDateButton,
+            format: 'DD-MM-YYYY',
+            onSelect: function(date) {
+                const selectedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+                document.getElementById('titulo-hoje').textContent = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                filterByDate(selectedDate);
+                picker.destroy();
+                picker = null;
+            },
+            i18n: {
+                previousMonth : 'Mês Anterior',
+                nextMonth     : 'Próximo Mês',
+                months        : ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                weekdays      : ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],
+                weekdaysShort : ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
+            },
+        });
+        picker.show();
+    }
+});
+
+    </script>
+    
+
+   <script src="dashboard.js"></script>
+</body>
+</html>

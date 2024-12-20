@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela</title>
+    <!-- Adicionando FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Adicione o link para a biblioteca do Calendário -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+         /* Estilo para o botão de voltar */
+    #backButton {
+      font-size: 18px;
+      position: absolute;
+      top: 20px;
+      left: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 35px;
+            margin-top: -10px;
+            margin-bottom: 40px;
+        }
+
+        table {
+            max-width: 800px; /* Definindo a largura máxima da tabela */
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 0px auto;
+        }
+
+        th, td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th:last-child, td:last-child {
+            border-right: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td {
+            color: #333;
+        }
+
+        /* Estilos dos botões */
+        .button {
+            background-color: #007bff;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width:14%;
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para a barra de rolagem */
+        .scroll::-webkit-scrollbar{
+            width: 10px;
+            border: 1px solid rgba(200, 200, 200, 0);
+        }
+
+        .scroll::-webkit-scrollbar-thumb{
+            background-color: #007bff;
+            border-radius: 1px;
+        }
+
+        .scroll{
+            max-width: 800px; /* Definindo a largura máxima */
+            width: 100%;
+            height: 300px; /* Defina a altura desejada */
+            overflow-y: auto;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para os dias da semana na tabela do Pikaday */
+        .pika-table th {
+            color: white; /* Altera a cor do texto para branco */
+            font-size: 12px;
+        }
+
+
+        /* CALENDÁRIO */
+        .pika-table {
+            width: 350px; /* Ajuste a largura do calendário */
+            max-width: 140%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /* CONTEINER DO CALENDÁRIO */
+        .pika-single {
+            width: 350px; /* Ajuste a largura do calendário */
+            padding: 20px 10px;
+            border-radius: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin-left: 25%;
+        }
+
+
+
+
+        @media screen and (min-width:1301px) and (max-width: 1600px){
+            #backButton{
+      font-size: 30px;
+    }
+
+            h1{
+                font-size: 50px;
+            }
+
+            .button{
+                width: 50%;
+                padding: 15px;
+                font-size: 20px;
+            }
+
+            th, td{
+                font-size: 20px;
+            }
+        }
+
+
+
+        @media screen and (min-width:1000px) and (max-width: 1300px){
+            #backButton{
+      font-size: 30px;
+    }
+
+            h1{
+                font-size: 55px;
+            }
+
+            .button{
+                width: 50%;
+                padding: 15px;
+                font-size: 25px;
+            }
+
+            th, td{
+                font-size: 30px;
+            }
+            
+        }
+
+        @media screen and (min-width:860px) and (max-width: 980px){
+        #backButton{
+        font-size: 20px;
+        }
+
+            h1{
+                font-size: 45px;
+            }
+
+            .button{
+                width: 50%;
+                padding: 15px;
+                font-size: 20px;
+            }
+
+            th, td{
+                font-size: 20px;
+            }
+        }
+
+
+        @media screen and (min-width:760px) and (max-width: 850px){
+        #backButton{
+        font-size: 20px;
+        }
+
+            h1{
+                font-size: 40px;
+            }
+
+            .button{
+                width: 50%;
+            }
+
+            th, td{
+                font-size: 18px;
+            }
+
+        }
+
+
+        @media screen and (min-width:390px) and (max-width: 430px){
+            h1{
+                font-size: 28px;
+                margin-top: 30px;
+            }
+
+            .button{
+                width: 50%;
+            }
+
+            th, td{
+                font-size: 15px;
+            }
+        }
+
+
+
+        @media screen and (min-width:340px) and (max-width: 389px){
+            h1{
+                font-size: 28px;
+                margin-top: 30px;
+            }
+
+            .button{
+                width: 50%;
+            }
+
+            th, td{
+                font-size: 15px;
+            }
+        }
+
+
+
+        @media screen and (max-width:339px) {
+            h1{
+                font-size: 25px;
+                margin-top: 50px;
+            }
+
+            .button{
+                width: 50%;
+            }
+
+            th, td{
+                font-size: 10px;
+            }
+
+        }
+
+
+        /* Media Query para telas horizontais */
+@media screen and (orientation: landscape) {
+
+    h1{
+        margin-top: 50px;
+    }
+
+    .button{
+        padding: 12px;
+        width: 35%;
+    }
+
+    table{
+        margin-bottom: 10px;
+    }
+
+    .pika-single {
+        margin: 0 auto;
+    }
+}
+       
+
+    </style>
+</head>
+<body>
+    <!-- Adicionando o botão de voltar -->
+  <a href="dashboard.html"><button id="backButton">
+    <i class="fas fa-arrow-left"></i> Voltar
+  </button></a>
+    <h1>Tabela de Agendamento</h1>
+    <div class="scroll">
+        <table id="userDataTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Serviços</th>
+                    <th>Preço Total</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+            <tbody id="userDataBody">
+                <!-- Seus dados da tabela aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botão de filtrar para hoje -->
+    <button id="filterButton" class="button">Filtrar para Hoje</button>
+
+    <!-- Botão de filtrar por data -->
+    <button id="filterByDateButton" class="button">Filtrar por Data</button>
+
+    <!-- Adicione a biblioteca do Calendário -->
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+    <script type="module">
+        // Importações do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+        apiKey: "AIzaSyBdetp7jRbqaL5B2iaFOjSSI_nUH_U0f6U",
+        authDomain: "arthur-37ccf.firebaseapp.com",
+        databaseURL: "https://arthur-37ccf-default-rtdb.firebaseio.com",
+        projectId: "arthur-37ccf",
+        storageBucket: "arthur-37ccf.appspot.com",
+        messagingSenderId: "633486950077",
+        appId: "1:633486950077:web:70b39f855f01c4c721c1d4"
+  };
+
+         // Inicialização do Firebase
+    const app = initializeApp(firebaseConfig);
+
+// Função para ler os dados do Firebase
+async function readUserData() {
+    const db = getDatabase();
+    const snapshot = await get(ref(db, 'agendamentos'));
+    const data = snapshot.val();
+
+    // Transforma os dados em um array de objetos
+    const userDataArray = [];
+    for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+            userDataArray.push({ ...data[key], key: key }); // adiciona a chave (key) do Firebase ao objeto
+        }
+    }
+
+    // Ordena os dados por data e hora
+    userDataArray.sort((a, b) => {
+        if (a.data !== b.data) {
+            return a.data.localeCompare(b.data);
+        } else {
+            return a.hora.localeCompare(b.hora);
+        }
+    });
+
+    // Limpa a tabela antes de adicionar os novos dados
+    const userDataBody = document.getElementById('userDataBody');
+    userDataBody.innerHTML = '';
+
+    // Adiciona os dados à tabela
+    userDataArray.forEach(userData => {
+        const row = document.createElement('tr');
+        const totalPrice = userData.servicos.reduce((acc, servico) => acc + parseFloat(servico.preco), 0);
+        row.innerHTML = `
+            <td class="nameCell">${userData.nome}</td>
+            <td>${userData.servicos.map(servico => `${servico.nome} - R$ ${servico.preco}`).join('<br>')}</td>
+            <td>R$ ${totalPrice.toFixed(2)}</td>
+            <td>${userData.data}</td>
+            <td>${userData.hora}</td>
+        `;
+        userDataBody.appendChild(row);
+
+        // Adiciona o evento de clique duplo para excluir o agendamento
+        row.querySelector('.nameCell').addEventListener('dblclick', function() {
+            const confirmDelete = confirm(`Tem certeza que deseja excluir o agendamento de ${userData.nome}?`);
+            if (confirmDelete) {
+                deleteAppointment(userData.key); // Chama a função para excluir o agendamento
+            }
+        });
+    });
+}
+
+// Função para excluir o agendamento do Firebase
+function deleteAppointment(key) {
+    const db = getDatabase();
+    const appointmentRef = ref(db, `agendamentos/${key}`);
+    
+    // Remove o agendamento do Firebase
+    remove(appointmentRef)
+        .then(() => {
+            console.log("Agendamento excluído com sucesso!");
+            readUserData(); // Atualiza a tabela após a exclusão
+        })
+        .catch((error) => {
+            console.error("Erro ao excluir o agendamento: ", error);
+        });
+}
+
+// Função para filtrar os resultados do dia de hoje
+function filterToday() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
+
+    const formattedToday = dd + '-' + mm + '-' + yyyy;
+
+    const rows = document.querySelectorAll('#userDataBody tr');
+    rows.forEach(row => {
+        const dataCell = row.querySelector('td:nth-child(4)');
+        if (dataCell.textContent.trim() !== formattedToday) {
+            row.style.display = 'none'; // Esconde a linha se a data não for a de hoje
+        } else {
+            row.style.display = ''; // Mostra a linha se a data for a de hoje
+        }
+    });
+}
+
+// Chama a função para ler os dados quando o documento é carregado
+document.addEventListener('DOMContentLoaded', function () {
+    readUserData();
+
+    // Adiciona o evento de clique ao botão de filtrar por hoje
+    const filterButton = document.getElementById('filterButton');
+    filterButton.addEventListener('click', filterToday);
+});
+
+// Função para filtrar os resultados com base na data selecionada
+function filterByDate(selectedDate) {
+    const rows = document.querySelectorAll('#userDataBody tr');
+    rows.forEach(row => {
+        const dataCell = row.querySelector('td:nth-child(4)');
+        if (dataCell.textContent.trim() !== selectedDate) {
+            row.style.display = 'none'; // Esconde a linha se a data não for a selecionada
+        } else {
+            row.style.display = ''; // Mostra a linha se a data for a selecionada
+        }
+    });
+}
+
+// Adiciona o evento de clique ao botão de filtrar por data
+const filterByDateButton = document.getElementById('filterByDateButton');
+filterByDateButton.addEventListener('click', function() {
+    const picker = new Pikaday({
+        field: filterByDateButton,
+        format: 'DD-MM-YYYY',
+        onSelect: function(date) {
+            const selectedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+            filterByDate(selectedDate);
+            picker.destroy();
+        },
+        i18n: {
+            previousMonth : 'Mês Anterior',
+            nextMonth     : 'Próximo Mês',
+            months        : ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            weekdays      : ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],
+            weekdaysShort : ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
+        },
+    });
+    picker.show();
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 30px;
+            width: 40%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Inclui padding e borda no tamanho total */
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px); /* Calcula a largura subtraindo a margem interna */
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Inclui padding e borda no tamanho total */
+        }
+
+        .login-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px;
+            width: 50%;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Centraliza o botão */
+        form {
+            text-align: center;
+        }
+
+
+
+        @media screen and (max-width:339px){
+            .login-container{
+            padding: 30px;
+            width: 80%;
+            }
+
+            .login-container h2 {
+                font-size: 18px;
+            }
+
+            .form-group label{
+                font-size: 15px;
+            }
+
+            .login-button{
+                width: 80%;
+                padding: 10px;
+            }
+        }
+
+
+        @media screen and (min-width:340px) and (max-width:390px){
+            .login-container{
+            padding: 30px;
+            width: 80%;
+            }
+
+            .login-container h2 {
+                font-size: 25px;
+            }
+
+            .login-button{
+                width: 80%;
+            }
+
+            .form-group label{
+                font-size: 18px;
+            }
+        }
+
+
+        @media screen and (min-width:391px) and (max-width:430px){
+            .login-container{
+            padding: 50px;
+            width: 80%;
+            }
+
+            .login-container h2 {
+                font-size: 30px;
+            }
+
+            .login-button{
+                width: 80%;
+            }
+
+            .form-group input{
+                width: 90%;
+            }
+
+            .form-group label{
+                font-size: 20px;
+            }
+        }
+
+
+
+        
+        @media screen and (min-width:760px) and (max-width: 850px){
+            .login-container{
+            padding: 50px;
+            width: 80%;
+            }
+
+            .login-container h2 {
+                font-size: 35px;
+            }
+
+            .login-button{
+                margin-top: 20px;
+                width: 80%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group input{
+                width: 90%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group label{
+                font-size: 23px;
+            }
+        }
+
+
+
+        @media screen and (min-width:860px) and (max-width: 980px){
+            .login-container{
+            padding: 50px;
+            width: 80%;
+            }
+
+            .login-container h2 {
+                font-size: 45px;
+            }
+
+            .login-button{
+                margin-top: 20px;
+                width: 80%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group input{
+                width: 90%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group label{
+                font-size: 25px;
+            }
+        }
+
+
+
+        
+        @media screen and (min-width:1000px) and (max-width: 1300px){
+            .login-container{
+            padding: 50px;
+            width: 60%;
+            }
+
+            .login-container h2 {
+                font-size: 45px;
+            }
+
+            .login-button{
+                margin-top: 20px;
+                width: 80%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group input{
+                width: 90%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group label{
+                font-size: 25px;
+            }
+        }
+
+
+
+        @media screen and (min-width:1301px) and (max-width: 1600px){
+            .login-container{
+            padding: 30px;
+            width: 60%;
+            }
+
+            .login-container h2 {
+                font-size: 40px;
+            }
+
+            .login-button{
+                margin-top: 20px;
+                width: 80%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group input{
+                width: 90%;
+                font-size: 25px;
+                padding: 20px;
+            }
+
+            .form-group label{
+                font-size: 25px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>EQUIPE BARBEARIA</h2>
+        <form onsubmit="validarCredenciais(event)">
+            <div class="form-group">
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            <button type="submit" class="login-button">ENTRAR</button>
+        </form>
+    </div>
+
+    <script>
+        function validarCredenciais(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            // Obter valores dos campos
+            const login = document.getElementById('login').value;
+            const senha = document.getElementById('senha').value;
+
+            // Verificar credenciais e redirecionar para páginas diferentes
+            if (login === 'kel@barbearia.com' && senha === '1855') {
+                window.location.href = 'dashboard.html';
+            } else if (login === 'arthur@barbearia.com' && senha === '3055') {
+                window.location.href = '.html'; // Colocar outra página diferente da kel@barbearia.com
+            } else {
+                alert('Credenciais inválidas. Tente novamente.');
+            }
+        }
+    </script>
+</body>
+</html>

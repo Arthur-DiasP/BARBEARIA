@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupom</title>
+    <link rel="stylesheet" href="cupom-cliente.css">
+    <!-- Importando Google Fonts Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-icon">
+            <span class="material-icons">arrow_back</span>
+        </a>
+        <h1>Cupom</h1>
+    </header>
+
+    <div class="fidelity-card">
+        <img src="LOGO VPLUS.png" alt="VPlus Logo" class="logo">
+        <div class="squares">
+            <div class="square" id="square1"></div>
+            <div class="square" id="square2"></div>
+            <div class="square" id="square3"></div>
+            <div class="square" id="square4"></div>
+            <div class="special">
+                <span>CORTE 100% GRÁTIS</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="number-selection">
+        <div class="number" data-number="0">0</div>
+        <div class="number" data-number="1">1</div>
+        <div class="number" data-number="2">2</div>
+        <div class="number" data-number="3">3</div>
+        <div class="number" data-number="4">4</div>
+    </div>
+
+    <div class="number-selection" id="segundo">
+        <div class="number" data-number="5">5</div>
+        <div class="number" data-number="6">6</div>
+        <div class="number" data-number="7">7</div>
+        <div class="number" data-number="8">8</div>
+        <div class="number" data-number="9">9</div>
+    </div>
+    
+    <button id="clear-squares">APAGAR</button>
+    <button id="show-coupon">VERIFICAR</button>
+
+    <div id="notification" class="hidden">
+        <p>PARABÉNS, VOCÊ GANHOU UM CORTE 100% GRÁTIS</p>
+        <a href="agendar-cupom.html" id="schedule-link">
+            <button class="agendar">AGENDAR</button>
+        </a>
+    </div>
+    <div id="fireworks-container"></div>
+
+    <script src="cupom-cliente.js"></script>
+</body>
+</html>

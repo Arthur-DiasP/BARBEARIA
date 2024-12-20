@@ -1,0 +1,268 @@
+body {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-top:40px;
+    margin-bottom: 70px;
+}
+
+.circle-container {
+    display: flex;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 10px;
+}
+
+.circle img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.circle:hover {
+filter: brightness(1.3);
+}     
+
+.material-symbols-outlined {
+font-variation-settings:
+'FILL' 0,
+'wght' 300,
+'GRAD' -25,
+'opsz' 24
+}
+
+.rating {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 1.2em;
+}
+
+
+.rating::before {
+content: '';
+background-color: #005f73; /* Cor de fundo da plaquinha */
+color: white; /* Cor do texto da plaquinha */
+padding: 5px 10px; /* Espaçamento interno da plaquinha */
+border-radius: 5px; /* Borda arredondada da plaquinha */
+position: absolute;
+bottom: -25px; /* Posicionamento em relação ao elemento pai (rating) */
+right: 0;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Alinha na parte inferior */
+    margin-top: 40px;
+    z-index: 1;
+    position: fixed; /* Fixa na parte inferior */
+    bottom: 50px;
+    width: 100%;
+}
+
+.button {
+    width: 300px;
+    height: 60px;
+    background-color: #007bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #e5132a;
+}
+
+
+
+@media screen and (min-width:1301px) and (max-width: 1600px){
+    h1{
+        font-size:40px ;
+    }
+
+    .circle{
+        margin: 40px;
+    }
+
+    .circle img{
+        width: 180px;
+        height: 180px;
+        margin-top: -10px;
+    }
+
+    .rating {
+       top:170px;
+    }
+
+
+    .rating::before {
+      bottom: -40px;
+    }
+
+
+    .button {
+       width: 70%;
+       font-size: 28px;
+    }
+}
+
+
+
+@media screen and (min-width:1000px) and (max-width: 1300px){
+    h1{
+        font-size:45px ;
+    }
+
+    .circle{
+        margin: 40px;
+    }
+
+    .circle img{
+        width: 200px;
+        height: 200px;
+        margin-top: -10px;
+    }
+
+    .rating {
+       top:170px;
+    }
+
+
+    .rating::before {
+      bottom: -40px;
+    }
+
+
+    .button {
+       width: 80%;
+       font-size: 30px;
+    }
+}
+
+
+
+@media screen and (min-width:860px) and (max-width: 980px){
+    h1{
+        font-size:45px ;
+    }
+
+    .circle{
+        margin: 40px;
+    }
+
+    .circle img{
+        width: 200px;
+        height: 200px;
+        margin-top: -10px;
+    }
+
+    .rating {
+       top:170px;
+    }
+
+
+    .rating::before {
+      bottom: -40px;
+    }
+
+
+    .button {
+       width: 80%;
+       font-size: 30px;
+    }
+}
+
+
+
+@media screen and (min-width:760px) and (max-width: 850px){
+    h1{
+        font-size:45px ;
+    }
+
+    .circle{
+        margin: 40px;
+    }
+
+    .circle img{
+        width: 200px;
+        height: 200px;
+        margin-top: -10px;
+    }
+
+    .rating {
+       top:170px;
+    }
+
+
+    .rating::before {
+      bottom: -40px;
+    }
+
+
+    .button {
+       width: 80%;
+       font-size: 25px;
+    }
+}
+
+
+
+@media screen and (max-width:339px) {
+    h1{
+        font-size:25px ;
+    }
+
+    .circle img{
+        width: 100px;
+        height: 100px;
+        margin-top: -100px;
+    }
+
+    .rating {
+       top:90px;
+    }
+
+
+    .rating::before {
+      bottom: 10px;
+    }
+
+
+    .button {
+       width: 80%;
+    }
+}

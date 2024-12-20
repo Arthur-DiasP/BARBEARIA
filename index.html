@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+    /* Estilos para todos os dispositivos */
+    body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .black-section {
+        background-color: black;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .white-section {
+        border-top-left-radius: 40px; /* canto superior esquerdo */
+        border-top-right-radius: 40px; /* canto superior direito */
+        background-color: #EAEAEA;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    img {
+        width: 30%;
+        height: auto;
+        cursor: pointer; /* Adicione o cursor de ponteiro para indicar que a imagem é clicável */
+    }
+
+    .conteiner {
+        display: flex;
+        flex-direction: column;
+        margin-top: -80px;
+    }
+
+    .barbeiro-button,
+    .cliente-button {
+        margin-top: 20px;
+        padding: 15px 60px;
+        background-color: #007bff;
+        color: white;
+        font-size: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        border-radius: 20px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .barbeiro-button:hover,
+    .cliente-button:hover {
+        background-color: #e5132a;
+    }
+
+    .navbar {
+        background-color: black;
+        display: flex;
+        justify-content: space-around;
+        padding: 1px 0;
+        position: fixed;
+        bottom: 8px;
+        width: 90%;
+        z-index: 1;
+        border-radius: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        overflow-x: auto;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: background-color 0.3s ease;
+        flex: none;
+    }
+
+    .navbar a:hover {
+        background-color: #333;
+        border-radius: 30px;
+    }
+
+    #segundo-navbar {
+        display: none;
+    }
+
+    @media screen and (min-width:1301px) and (max-width: 1600px){
+        img{
+            width: 18%;
+        }
+
+        .barbeiro-button,
+        .cliente-button {
+            padding: 13px 130px;
+            font-size: 25px;
+        }
+
+        .navbar a {
+            padding: 12px 15px;
+            font-size: 20px;
+        }
+    }
+
+    @media screen and (min-width:1000px) and (max-width: 1300px){
+        img{
+            width: 25%;
+        }
+
+        .barbeiro-button,
+        .cliente-button {
+            padding: 20px 130px;
+            font-size: 35px;
+        }
+
+        .navbar a {
+            padding: 12px 15px;
+            font-size: 28px;
+        }
+    }
+
+    @media screen and (min-width:860px) and (max-width: 980px){
+        img{
+            width: 50%;
+        }
+
+        .barbeiro-button,
+        .cliente-button {
+            padding: 25px 130px;
+            font-size: 35px;
+        }
+
+        .navbar a {
+            padding: 12px 15px;
+            font-size: 25px;
+        }
+    }
+
+    @media screen and (min-width:760px) and (max-width: 850px){
+        img{
+            width: 50%;
+        }
+
+        .barbeiro-button,
+        .cliente-button {
+            padding: 20px 120px;
+            font-size: 30px;
+        }
+
+        .navbar a {
+            padding: 12px 15px;
+            font-size: 25px;
+        }
+    } 
+
+    @media screen and (min-width:390px) and (max-width: 430px){
+        img{
+            width: 55%;
+        }
+    }
+
+    @media screen and (min-width:340px) and (max-width: 389px){
+        img{
+            width: 52%;
+        }
+
+        .barbeiro-button,
+        .cliente-button {
+            padding: 12px 50px;
+            font-size: 23px;
+        }
+
+        .navbar a {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 339px){
+        img{
+            width: 48%;
+        }
+
+        .barbeiro-button,
+        .cliente-button {
+            padding: 8px 40px;
+            font-size: 20px;
+        }
+
+        .navbar a {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+    }
+    </style>
+
+  <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var logo = document.querySelector("img");
+            logo.addEventListener("dblclick", function() {
+                window.location.href = "outra-pagina.html"; // Substitua "outra-pagina.html" pela URL desejada
+            });
+
+
+            /* 
+
+            var primeiroNavbar = document.getElementById("primeiro-navbar");
+            var segundoNavbar = document.getElementById("segundo-navbar");
+            var touchStartX = 0;
+            var touchEndX = 0;
+
+            function checkDirection() {
+                if (touchEndX < touchStartX) {
+                    primeiroNavbar.style.display = "none";
+                    segundoNavbar.style.display = "flex";
+                } else if (touchEndX > touchStartX) {
+                    primeiroNavbar.style.display = "flex";
+                    segundoNavbar.style.display = "none";
+                }
+            }
+
+            function handleTouchStart(event) {
+                touchStartX = event.changedTouches[0].screenX;
+            }
+
+            function handleTouchEnd(event) {
+                touchEndX = event.changedTouches[0].screenX;
+                checkDirection();
+            }
+
+            primeiroNavbar.addEventListener("touchstart", handleTouchStart, false);
+            primeiroNavbar.addEventListener("touchend", handleTouchEnd, false);
+
+            segundoNavbar.addEventListener("touchstart", handleTouchStart, false);
+            segundoNavbar.addEventListener("touchend", handleTouchEnd, false);
+            */
+        });
+    </script>
+
+</head>
+<body>
+    <div class="black-section">
+        <!-- Sua imagem do logo aqui -->
+        <img src="LOGO VPLUS.png" alt="Logo">
+    </div>
+    <div class="white-section">
+        <div class="conteiner">
+            <!-- Conteúdo da seção branca aqui -->
+            <a href="login.html" class="barbeiro-button">BARBEIRO</a>
+            <a href="selecionar.html" class="cliente-button">CLIENTE</a>
+        </div>
+    </div>
+
+    <!-- Primeiro Navbar -->
+    <div class="navbar" id="primeiro-navbar">
+        <a href="cupom-cliente.html">
+            <i class="material-icons">card_giftcard</i>
+            CUPOM
+        </a>
+        <a href="consultar.html" id="Início">
+            <i class="material-icons">person_search</i>
+            CONSULTAR
+        </a>
+        <a href="jogo.html">
+            <i class="material-icons">sports_esports</i>
+            JOGO
+        </a>
+    </div>
+
+    <!-- Segundo Navbar -->
+    <div class="navbar" id="segundo-navbar">
+        <a href="voz.html" id="voz">
+            <i class="material-icons">record_voice_over</i>
+            Voz
+        </a>
+    </div>
+</body>
+</html>
+

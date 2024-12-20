@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmado</title>
+  <!-- Adicionando FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      text-align: center;
+      background-color: black;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: #fafafa;
+    }
+
+    #backButton {
+      color: white;
+  font-size: 18px;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .agendamento-container {
+      background-color: #ffffffef;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 90%;
+      text-align: left;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-family: sans-serif;
+      color: #fafafa;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+      max-width: 50%;
+      margin-bottom: 30px;
+    }
+
+
+    .agendamento-info {
+      color: black;
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .agendamento-info p {
+      margin: 5px 0;
+    }
+
+    .agendamento-info span {
+      margin-left: 20px;
+    }
+
+    .btn-whatsapp {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 20px;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #128C7E;
+    }
+
+
+
+
+
+    @media screen and (min-width:1301px) and (max-width: 1600px){
+      h1{
+        font-size: 35px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      img{
+        width: 7%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 30px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 18px;
+      }
+
+      .btn-whatsapp{
+        width: 30%;
+        padding: 12px;
+        font-size: 18px;
+      }
+    }
+
+
+
+
+    @media screen and (min-width:1000px) and (max-width: 1300px){
+      h1{
+        font-size: 40px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      img{
+        width: 10%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 20px;
+      }
+
+      .btn-whatsapp{
+        width: 40%;
+        padding: 12px;
+        font-size: 22px;
+      }
+
+    }
+
+
+
+    @media screen and (min-width:860px) and (max-width: 980px){
+      h1{
+        font-size: 40px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      img{
+        width: 20%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 20px;
+      }
+
+      .btn-whatsapp{
+        width: 70%;
+        padding: 12px;
+        font-size: 22px;
+      }
+
+    }
+
+
+
+    @media screen and (min-width:760px) and (max-width: 850px){
+      h1{
+        font-size: 35px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      img{
+        width: 20%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 20px;
+      }
+
+      .btn-whatsapp{
+        width: 70%;
+        padding: 12px;
+        font-size: 20px;
+      }
+    }
+
+
+
+    @media screen and (min-width:390px) and (max-width: 430px){
+      h1{
+        font-size: 25px;
+        margin-top: 60px;
+        margin-bottom: 20px;
+      }
+
+      img{
+        width: 25%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 20px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 18px;
+      }
+
+      .btn-whatsapp{
+        width: 70%;
+        padding: 10px;
+        font-size: 17px;
+      }
+    }
+
+
+
+
+
+
+    @media screen and (min-width:340px) and (max-width: 389px){
+      h1{
+        font-size: 22px;
+        margin-top: 60px;
+        margin-bottom: 20px;
+      }
+
+      img{
+        width: 20%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 20px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 15px;
+      }
+
+      .btn-whatsapp{
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+      }
+
+    }
+
+
+
+    
+    
+    @media screen and (max-width:339px) {
+      h1{
+        font-size: 20px;
+        margin-top: 60px;
+      }
+
+      img{
+        width: 20%;
+      }
+
+
+      .agendamento-container{
+        width: 80%;
+        padding: 20px;
+      }
+
+
+      .agendamento-info p{
+        font-size: 14px;
+      }
+
+      .btn-whatsapp{
+        width: 70%;
+        padding: 10px;
+        font-size: 15px;
+      }
+
+
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+  <a href="index.html"><button id="backButton">
+    <i class="fas fa-arrow-left"></i> Voltar
+  </button></a>
+  <div class="content">
+    <h1>AGENDADO COM SUCESSO</h1>
+    <img src="https://cdn-icons-png.flaticon.com/128/169/169780.png" alt="Agendado com sucesso">
+
+    <div class="agendamento-container">
+      <div class="agendamento-info">
+        <p><strong>Nome:</strong> <span id="nome"></span></p>
+        <p><strong>Telefone:</strong> <span id="telefone"></span></p>
+        <p><strong>Data:</strong> <span id="data"></span></p>
+        <p><strong>Hora:</strong> <span id="hora"></span></p>
+        <p><strong>Serviços:</strong> <span id="servicos"></span></p>
+      </div>
+    </div>
+
+    <a id="link-whatsapp" class="btn-whatsapp" href="#" target="_blank">Salvar Mensagem no WhatsApp</a>
+
+  </div>
+
+  <script>
+    // Função para obter parâmetros da URL
+    function obterParametroUrl(nome) {
+      nome = nome.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + nome + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(window.location.href);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    document.getElementById('nome').textContent = obterParametroUrl('nome');
+    document.getElementById('telefone').textContent = obterParametroUrl('telefone');
+    document.getElementById('data').textContent = obterParametroUrl('data');
+    document.getElementById('hora').textContent = obterParametroUrl('hora');
+
+    var servicos = obterParametroUrl('servicos');
+    if (servicos) {
+      servicos = JSON.parse(servicos);
+      var servicosText = servicos.map(function(servico) {
+        return servico.nome + ' - R$' + servico.preco;
+      }).join(', ');
+
+      document.getElementById('servicos').textContent = servicosText;
+    }
+
+    // Obtém o número de telefone e adiciona o código do país (+55 para o Brasil)
+    var telefone = obterParametroUrl('telefone');
+    telefone = "+55" + telefone.replace(/\D/g, ''); // Adiciona o código do país +55
+
+    // Cria a mensagem para o WhatsApp
+    var mensagem = 'Olá! Seu agendamento foi um sucesso, veja as informações:\n';
+    mensagem += 'Nome: ' + obterParametroUrl('nome') + '\n';
+    mensagem += 'Data: ' + obterParametroUrl('data') + '\n';
+    mensagem += 'Hora: ' + obterParametroUrl('hora') + '\n';
+    mensagem += 'Serviços: ' + servicosText;
+
+    // Cria o link para o WhatsApp com a mensagem
+    var linkWhatsApp = 'https://wa.me/' + telefone + '?text=' + encodeURIComponent(mensagem);
+    document.getElementById('link-whatsapp').setAttribute('href', linkWhatsApp);
+
+  </script>
+</body>
+
+</html>

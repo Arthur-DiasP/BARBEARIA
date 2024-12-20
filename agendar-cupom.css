@@ -1,0 +1,175 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  #backButton {
+    font-size: 18px;
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Estilos do formulário */
+  #userForm {
+    width: 300px;
+    margin: 80px auto;
+  }
+  
+  /* Estilos dos grupos de formulário */
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  
+  /* Estilos das imagens nos grupos de formulário */
+  .form-group img {
+    padding: 13px;
+    background-color: #FFD700;
+    margin-right: 0px;
+    width: 13%;
+    margin-top: -20px;
+  }
+  
+  /* Estilos dos campos de entrada de texto e seleção */
+  input[type='text'],
+  input[type='tel'],
+  input[type='date'],
+  input[type='time'],
+  select,
+  .hora {
+    width: 100%;
+    padding: 21px;
+    margin-bottom: 19px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    font-size: 17px;
+    text-align: center;
+    color: black;
+    position: relative; /* Adicionado para posicionar a imagem */
+  }
+  
+  /* Placeholder preto e centralizado */
+  input[type='text']::placeholder,
+  input[type='tel']::placeholder,
+  input[type='date']::placeholder,
+  input[type='time']::placeholder,
+  select::placeholder {
+    color: black;
+  }
+  
+  /* Estilos dos campos de seleção */
+  select option {
+    font-size: 17px;
+    padding: 12px;
+  }
+  
+  /* Estilos do botão 'SERVIÇOS' */
+  #buttonServiços {
+    font-size: 17px;
+    width: 100%;
+    padding: 21px;
+    margin-bottom: 19px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: black;
+    position: relative; /* Adicionado para posicionar a imagem */
+  }
+  
+  /* Estilos do contêiner dos serviços */
+  #ServiçosConteiner {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: none;
+    font-size: 18px;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+    width: 300px;
+  }
+  
+  .Itens-Serviços{
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos do valor total */
+  #valorTotal {
+    margin-top: 10px;
+  }
+  
+  
+  /* Estilos do botão de agendamento */
+  #confirmarBotao,
+  #submitButton {
+    margin-top: 30px;
+    background-color: #007bff;
+    font-size: 19px;
+    color: white;
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #submitButton:hover {
+    background-color: #0350a8;
+  }
+  
+  /* Estilos do botão de redefinição */
+  #resetButton {
+    background-color: #007bff; /* Cor de fundo vermelha */
+    color: white; /* Cor do texto branco */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Borda arredondada */
+    width:100%;
+    padding: 18px;
+    font-size: 19px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de apontador */
+    margin-top: 10px; /* Margem superior para separação do botão Agendar */
+  }
+  
+  #resetButton:hover {
+    background-color: #0350a8; /* Cor de fundo mais escura quando o mouse está sobre */
+  }
+  
+  /* Estilos dos campos de checkbox */
+  .form-group input[type='checkbox'] {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  
+  /* Estilos das imagens dentro dos campos de entrada, seleção e botão 'Serviços' */
+  input[type='text'] + img,
+  select + img,
+  #buttonServiços + img {
+    position: relative;
+    left: -25px;
+    top: 6px;
+  }
+  
+  /* Ajuste fino para o botão 'Serviços' */
+  #buttonServiços + img {
+    top: 4px;
+  }
+  
+  
+  .flatpickr-calendar {
+    background-color: #ffffff !important;
+  }
+  

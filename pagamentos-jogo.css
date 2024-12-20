@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header .back-icon {
+    position: absolute;
+    left: 20px;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+
+header .back-icon .material-icons {
+    font-size: 24px;
+}
+
+.itens {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px; /* Adicionando espaço abaixo do header */
+}
+
+.itens h2 {
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.itens img {
+    width: 80%;
+    height: auto;
+    margin: 10px 0;
+}
+
+.itens input {
+    width: 90%;
+    max-width: 500px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+.itens button {
+    margin-top: 10px;
+    padding: 10px 30px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.itens button:active {
+    background-color: #0056b3;
+}
+
+/* Media Queries */
+
+/* Telas menores (menos de 360px) */
+@media screen and (max-width: 359px) {
+    header h1 {
+        font-size: 20px;
+    }
+
+    .itens h2 {
+        font-size: 24px;
+    }
+
+    .itens img {
+        width: 70%;
+    }
+
+    .itens input {
+        width: 90%;
+        font-size: 12px;
+    }
+
+    .itens button {
+        font-size: 14px;
+        padding: 10px 35px;
+    }
+}
+
+/* Telas menores (entre 360px à 599px) */
+@media screen and (min-width:360px) and (max-width: 599px) {
+    header h1 {
+        font-size: 20px;
+    }
+
+    .itens{
+        margin-top: -20%;
+    }
+
+    .itens h2 {
+        font-size: 30px;
+    }
+
+    .itens img {
+        width: 70%;
+    }
+
+    .itens input {
+        width: 90%;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .itens button {
+        font-size: 14px;
+        padding: 10px 35px;
+    }
+}
+
+/* Telas médias (600px a 1199px) */
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+    header h1 {
+        font-size: 22px;
+    }
+
+    .itens h2 {
+        font-size: 28px;
+    }
+
+    .itens img {
+        width: 90%;
+    }
+
+    .itens input {
+        width: 90%;
+        font-size: 13px;
+    }
+
+    .itens button {
+        font-size: 14px;
+        padding: 9px 25px;
+    }
+}
+
+/* Telas grandes (1200px ou mais) */
+@media screen and (min-width: 1200px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    .itens h2 {
+        font-size: 30px;
+    }
+
+    .itens img {
+        width: 70%;
+    }
+
+    .itens input {
+        width: 90%;
+        font-size: 14px;
+    }
+
+    .itens button {
+        font-size: 15px;
+        padding: 10px 30px;
+    }
+}
